@@ -11,11 +11,20 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
+import java.util.List;
+
 @Controller
 public class UserController {
 
     @Autowired
     private UserRepository userRepository;
+
+    @GetMapping("/")
+    public String showUsers(Model model) {
+        List<User> users = userRepository.findAll();
+        model.addAttribute("users", users);
+        return "index"; // or the name of your Thymeleaf template
+    }
 
     @GetMapping("/signup")
     public String showSignUpForm(Model model) {
